@@ -8,6 +8,22 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/portal.css">
 </head>
 <body class="portal-body">
+
+    <!-- Top Navigation -->
+    <nav class="portal-nav">
+        <div class="portal-nav-inner">
+            <a href="/employee/all" class="nav-brand">
+                <span class="nav-brand-badge">C</span>
+                Capgemini Portal
+            </a>
+            <div class="nav-links">
+                <a href="/employee/all" class="nav-link active">Employees</a>
+                <a href="/users" class="nav-link">Users</a>
+                <a href="/logout" class="nav-link nav-logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
     <main class="dashboard-shell">
         <div class="dashboard-container" style="max-width: 860px;">
             <section class="dashboard-card">

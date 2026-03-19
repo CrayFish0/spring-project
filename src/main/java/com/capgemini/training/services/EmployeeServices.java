@@ -1,5 +1,6 @@
 package com.capgemini.training.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,5 +35,28 @@ public class EmployeeServices {
 
     public void deleteEmployee(int id) {
         employeeRepository.deleteById(id);
+    }
+
+    public List<Employee> searchEmployees(String query, String searchBy) {
+        if (query == null || query.isBlank()) {
+            return employeeRepository.findAll();
+        }
+        if (searchBy == null) searchBy = "name";
+        return switch (searchBy.toLowerCase()) {
+            case "empid" -> {
+                try {
+                    yield employeeRepository.findByEmpId(Integer.parseInt(query.trim()));
+                } catch (NumberFormatException e) {
+                    yield new ArrayList<>();
+                }
+            }
+            case "city" -> employeeRepository.findByEmpCityContainingIgnoreCase(query.trim());
+            case "email" -> employeeRepository.findByEmpEmailContainingIgnoreCase(query.trim());
+            default -> employeeRepository.findByEmpNameContainingIgnoreCase(query.trim());
+        };
+    }
+
+    public long getTotalCount() {
+        return employeeRepository.count();
     }
 }

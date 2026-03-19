@@ -1,14 +1,17 @@
 package com.capgemini.training.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capgemini.training.Entity.UserEntity;
 import com.capgemini.training.services.LoginServices;
+import com.capgemini.training.services.EmployeeServices;
 
 @Controller
 public class LoginController {
@@ -16,29 +19,45 @@ public class LoginController {
 	@Autowired
 	LoginServices loginServices;
 
+	@Autowired
+	EmployeeServices employeeServices;
+
 	@GetMapping("/")
 	public String login(Model model) {
 		return "/login.jsp";
 	}
 
 	@PostMapping("/login")
-	public String login(String username, String password, Model model) {
+	public String login(String username, String password, Model model, HttpSession session) {
 
 		UserEntity user = loginServices.authenticateUser(username, password);
 
 		if (user != null) {
+			session.setAttribute("loggedInUser", user.getName());
 			model.addAttribute("name", user.getName());
 			model.addAttribute("user", user.getName());
+			model.addAttribute("empCount", employeeServices.getTotalCount());
+			model.addAttribute("userCount", loginServices.getTotalUserCount());
 			return "/welcome.jsp";
 
 		} else if ("admin".equals(username) && "admin".equals(password)) {
+			session.setAttribute("loggedInUser", "Admin");
 			model.addAttribute("name", "Admin");
 			model.addAttribute("user", "Admin");
+			model.addAttribute("empCount", employeeServices.getTotalCount());
+			model.addAttribute("userCount", loginServices.getTotalUserCount());
 			return "/welcome.jsp";
 
 		} else {
-			return "/employeeList.jsp";
+			model.addAttribute("error", "Invalid username or password. Please try again.");
+			return "/login.jsp";
 		}
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
 	}
 
 	@GetMapping("/register")
@@ -72,7 +91,6 @@ public class LoginController {
 
 	@PostMapping("/forgot")
 	public String forgot(String username, Model model) {
-		// simple placeholder: pretend we sent a reset link if username provided
 		if (username != null && !username.isBlank()) {
 			model.addAttribute("msg", "If an account exists for '" + username + "', a reset link has been sent.");
 		} else {

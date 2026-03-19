@@ -4,11 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>${pageTitle}</title>
+    <title>${pageTitle} | Capgemini Training Portal</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/portal.css">
 </head>
 <body class="portal-body">
+
+    <!-- Top Navigation -->
+    <nav class="portal-nav">
+        <div class="portal-nav-inner">
+            <a href="/employee/all" class="nav-brand">
+                <span class="nav-brand-badge">C</span>
+                Capgemini Portal
+            </a>
+            <div class="nav-links">
+                <a href="/employee/all" class="nav-link">Employees</a>
+                <a href="/users" class="nav-link active">Users</a>
+                <a href="/logout" class="nav-link nav-logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
     <main class="dashboard-shell">
         <div class="dashboard-container" style="max-width: 860px;">
             <section class="dashboard-card">
@@ -25,22 +41,26 @@
                     <div class="form-stack">
                         <div>
                             <label for="name" class="portal-label">Full Name</label>
-                            <input id="name" type="text" class="portal-input" name="name" value="${userEntity.name}" placeholder="Enter full name" required>
+                            <input id="name" type="text" class="portal-input" name="name"
+                                   value="${userEntity.name}" placeholder="Enter full name" required>
                         </div>
 
                         <div>
                             <label for="username" class="portal-label">Username</label>
-                            <input id="username" type="text" class="portal-input" name="username" value="${userEntity.username}" placeholder="Enter username" required>
+                            <input id="username" type="text" class="portal-input" name="username"
+                                   value="${userEntity.username}" placeholder="Enter username" required>
                         </div>
 
                         <div>
                             <label for="email" class="portal-label">Email</label>
-                            <input id="email" type="email" class="portal-input" name="email" value="${userEntity.email}" placeholder="name@company.com" required>
+                            <input id="email" type="email" class="portal-input" name="email"
+                                   value="${userEntity.email}" placeholder="name@company.com" required>
                         </div>
 
                         <div>
                             <label for="password" class="portal-label">Password</label>
-                            <input id="password" type="text" class="portal-input" name="password" value="${userEntity.password}" placeholder="Enter password" required>
+                            <input id="password" type="password" class="portal-input" name="password"
+                                   placeholder="Enter password" required>
                         </div>
                     </div>
 

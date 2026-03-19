@@ -21,7 +21,34 @@ public class EmployeeController {
     public String getAllEmployees(Model model) {
         List<Employee> list = employeeServices.getAllEmployee();
         model.addAttribute("employees", list);
+        model.addAttribute("totalCount", employeeServices.getTotalCount());
+        model.addAttribute("searchQuery", "");
+        model.addAttribute("searchBy", "name");
         return "/employeeList.jsp";
+    }
+
+    @GetMapping("/search")
+    public String searchEmployees(
+            @RequestParam(defaultValue = "") String query,
+            @RequestParam(defaultValue = "name") String searchBy,
+            Model model) {
+        List<Employee> list = employeeServices.searchEmployees(query, searchBy);
+        model.addAttribute("employees", list);
+        model.addAttribute("totalCount", employeeServices.getTotalCount());
+        model.addAttribute("searchQuery", query);
+        model.addAttribute("searchBy", searchBy);
+        model.addAttribute("resultCount", list.size());
+        return "/employeeList.jsp";
+    }
+
+    @GetMapping("/view/{id}")
+    public String viewEmployee(@PathVariable int id, Model model) {
+        Employee emp = employeeServices.getEmployeeById(id);
+        if (emp == null) {
+            return "redirect:/employee/all";
+        }
+        model.addAttribute("employee", emp);
+        return "/employeeDetail.jsp";
     }
 
     @GetMapping("/add")

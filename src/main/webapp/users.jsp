@@ -9,6 +9,22 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/portal.css">
 </head>
 <body class="portal-body">
+
+    <!-- Top Navigation -->
+    <nav class="portal-nav">
+        <div class="portal-nav-inner">
+            <a href="/employee/all" class="nav-brand">
+                <span class="nav-brand-badge">C</span>
+                Capgemini Portal
+            </a>
+            <div class="nav-links">
+                <a href="/employee/all" class="nav-link">Employees</a>
+                <a href="/users" class="nav-link active">Users</a>
+                <a href="/logout" class="nav-link nav-logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
     <main class="dashboard-shell">
         <div class="dashboard-container">
             <section class="dashboard-hero">
@@ -19,8 +35,8 @@
                 <h1>Manage every portal account from one clear workspace.</h1>
                 <p>Review active records, update account details, and create new users with a cleaner administration experience built for day-to-day work.</p>
                 <div class="hero-actions mt-4">
-                    <a href="/users/new" class="portal-btn">Add New User</a>
-                    <a href="/" class="portal-btn-ghost">Return to Login</a>
+                    <a href="/users/new" class="portal-btn">+ Add New User</a>
+                    <a href="/employee/all" class="portal-btn-ghost">Employee Directory</a>
                 </div>
             </section>
 
@@ -67,7 +83,8 @@
                                             <td class="text-end">
                                                 <div class="table-actions justify-content-end">
                                                     <a href="/users/edit/${u.id}" class="portal-btn-ghost portal-btn-sm">Edit</a>
-                                                    <a href="/users/delete/${u.id}" class="portal-btn-danger portal-btn-sm" onclick="return confirm('Delete this user?');">Delete</a>
+                                                    <a href="/users/delete/${u.id}" class="portal-btn-danger portal-btn-sm"
+                                                       onclick="return confirm('Delete this user?');">Delete</a>
                                                 </div>
                                             </td>
                                         </tr>

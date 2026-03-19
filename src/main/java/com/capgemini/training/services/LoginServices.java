@@ -40,4 +40,9 @@ public class LoginServices {
         loginRepository.deleteById(id);
     }
 
+    public long getTotalUserCount() {
+        return loginRepository.count();
+    }
+
 }
+
